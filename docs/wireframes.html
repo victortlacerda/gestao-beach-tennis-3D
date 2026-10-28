@@ -1,0 +1,484 @@
+<title>Wireframes Arena Beach Tennis</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: índice de telas à esquerda (vira faixa rolável no celular), tela de rascunho à direita com notas ao lado. */
+:root {
+  --bg: #F3F5F7; --panel: #FFFFFF; --fg: #12263A; --muted: #5B6B7B; --line: #D5DCE3; --soft: #E8EDF2;
+  --hatch1: #E9EEF3; --hatch2: #DDE4EB;
+  --navy: #0B2540; --navy2: #12355B; --on-navy: #FFF9EE; --turq: #1FB5B0; --coral: #E5513D; --gold: #B98F00;
+  --livre: #2E9E5B; --aula: #7A4FD1; --aluguel: #2F7DE1; --dayuse: #F29B2F; --camp: #D9A800; --bloq: #8A8F98;
+  --ok-bg: #DDF3E6; --warn-bg: #FFF0C9; --bad-bg: #FDE1DC; --focus: #0A7C78;
+  --font: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0A1624; --panel: #112238; --fg: #E8EEF4; --muted: #9FB0C1; --line: #26415C; --soft: #1A3050;
+  --hatch1: #14283F; --hatch2: #1A3250; --coral: #FF7A66; --gold: #F4C531; --ok-bg: #123A2A; --warn-bg: #3F3510; --bad-bg: #4A1F1B; --focus: #4FD6D0; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #0A1624; --panel: #112238; --fg: #E8EEF4; --muted: #9FB0C1; --line: #26415C; --soft: #1A3050;
+  --hatch1: #14283F; --hatch2: #1A3250; --coral: #FF7A66; --gold: #F4C531; --ok-bg: #123A2A; --warn-bg: #3F3510; --bad-bg: #4A1F1B; --focus: #4FD6D0; color-scheme: dark; }
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--font); font-size: 15px; line-height: 1.5; margin: 0;
+  padding-block: 20px 40px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+button { font: inherit; color: inherit; cursor: pointer; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.wrap { max-width: 1320px; margin: 0 auto; }
+h1 { font-size: clamp(22px, 3vw, 30px); margin: 0 0 4px; letter-spacing: -0.01em; text-wrap: balance; }
+.lead { color: var(--muted); margin: 0 0 18px; max-width: 70ch; }
+.tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+
+.layout { display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 20px; align-items: start; }
+nav { position: sticky; top: 12px; display: flex; flex-direction: column; gap: 4px; }
+nav .grp { margin: 12px 0 2px; }
+nav .grp:first-child { margin-top: 0; }
+nav button { text-align: left; background: transparent; border: 1px solid transparent; border-radius: 10px; padding: 8px 10px; color: var(--fg); }
+nav button:hover { background: var(--soft); }
+nav button[aria-selected="true"] { background: var(--navy); color: var(--on-navy); }
+nav button small { display: block; color: inherit; opacity: .7; font-size: 12px; }
+
+.screen[hidden] { display: none; }
+.head { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: baseline; justify-content: space-between; margin-bottom: 12px; }
+.head h2 { margin: 0; font-size: 21px; text-wrap: balance; }
+.uses { display: flex; flex-wrap: wrap; gap: 6px; }
+.uses span { font-size: 12px; background: var(--soft); border-radius: 999px; padding: 2px 10px; color: var(--muted); }
+.cols { display: grid; grid-template-columns: minmax(0, 1fr) 270px; gap: 18px; align-items: start; }
+.notes { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; font-size: 14px; }
+.notes h3 { margin: 0 0 6px; font-size: 13px; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); }
+.notes ul { margin: 0 0 12px; padding-left: 18px; }
+.notes li { margin: 3px 0; }
+.q { background: var(--warn-bg); border-radius: 8px; padding: 8px 10px; margin-top: 4px; }
+
+/* moldura de tela */
+.scroller { overflow-x: auto; border-radius: 12px; }
+.frame { min-width: 760px; background: var(--navy); color: var(--on-navy); border-radius: 12px; padding: 10px; border: 1px solid var(--line); }
+.frame.light { background: var(--panel); color: var(--fg); }
+.top { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 4px 6px 10px; font-size: 13px; }
+.top .brand { font-weight: 800; letter-spacing: .04em; }
+.modes { display: flex; gap: 4px; background: rgba(255,255,255,.1); border-radius: 10px; padding: 3px; }
+.modes span { padding: 3px 12px; border-radius: 8px; font-size: 12px; }
+.modes .on { background: var(--turq); color: #05302E; font-weight: 700; }
+.clock { font-weight: 700; }
+.clock small { font-weight: 400; opacity: .75; margin-left: 6px; }
+.row { display: flex; gap: 10px; }
+.grow { flex: 1; min-width: 0; }
+.scene { position: relative; border-radius: 10px; min-height: 330px; background: repeating-linear-gradient(135deg, var(--hatch1) 0 10px, var(--hatch2) 10px 20px); color: var(--fg); display: grid; place-items: center; text-align: center; padding: 14px; }
+.scene > div:first-child { position: absolute; top: 10px; left: 10px; right: 10px; }
+.scene b { display: block; font-size: 15px; }
+.scene small { color: var(--muted); }
+.court { position: absolute; width: 22%; height: 17%; border: 2px solid var(--muted); border-radius: 4px; background: rgba(255,255,255,.35); font-size: 11px; display: grid; place-items: center; font-weight: 700; }
+.court.c1 { left: 12%; top: 22%; } .court.c2 { left: 40%; top: 22%; } .court.c3 { left: 12%; top: 48%; } .court.c4 { left: 40%; top: 48%; }
+.stand { position: absolute; right: 8%; top: 22%; width: 9%; height: 40%; border: 2px dashed var(--muted); font-size: 10px; display: grid; place-items: center; writing-mode: vertical-rl; }
+.fachada { position: absolute; left: 8%; right: 8%; bottom: 7%; height: 14%; display: flex; gap: 4px; }
+.fachada i { flex: 1; font-style: normal; border: 2px solid var(--muted); border-radius: 4px; font-size: 10px; display: grid; place-items: center; background: rgba(255,255,255,.35); }
+.side { width: 230px; display: flex; flex-direction: column; gap: 7px; }
+.card { border-radius: 10px; padding: 8px 10px; background: var(--navy2); border-left: 5px solid var(--bloq); font-size: 13px; }
+.card b { font-size: 14px; }
+.card .sc { font-weight: 800; color: #F4C531; font-size: 16px; }
+.card.s-livre { border-color: var(--livre); } .card.s-aula { border-color: var(--aula); } .card.s-aluguel { border-color: var(--aluguel); }
+.card.s-dayuse { border-color: var(--dayuse); } .card.s-camp { border-color: var(--camp); }
+.chip { display: inline-block; font-size: 11px; font-weight: 800; border-radius: 999px; padding: 1px 9px; color: #fff; white-space: nowrap; letter-spacing: .02em; }
+.chip.livre { background: var(--livre); } .chip.aula { background: var(--aula); } .chip.aluguel { background: var(--aluguel); }
+.chip.dayuse { background: var(--dayuse); color: #2B1B00; } .chip.camp { background: var(--camp); color: #2B2100; } .chip.bloq { background: var(--bloq); }
+.chip.ok { background: var(--livre); } .chip.pend { background: var(--dayuse); color: #2B1B00; } .chip.atras { background: var(--coral); color: #2B0A05; }
+.queue { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 4px; }
+.queue span { font-size: 11px; border: 1px solid var(--dayuse); color: #FFD9A0; border-radius: 6px; padding: 0 6px; }
+.ticker { margin-top: 10px; background: rgba(255,255,255,.1); border-radius: 10px; padding: 8px 12px; font-size: 13px; display: flex; gap: 10px; align-items: center; }
+.ticker .tag { color: #F4C531; }
+.dots { margin-left: auto; letter-spacing: 3px; opacity: .6; }
+
+/* partes do painel claro */
+.pad { padding: 8px 10px; }
+.title { font-weight: 800; font-size: 16px; margin: 0 0 8px; }
+.box { border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; background: var(--panel); color: var(--fg); }
+.box + .box { margin-top: 10px; }
+.box h4 { margin: 0 0 6px; font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.btn { display: inline-block; border: 1.5px solid var(--fg); border-radius: 9px; padding: 4px 12px; font-size: 13px; font-weight: 700; background: transparent; color: var(--fg); }
+.btn.pri { background: var(--turq); border-color: var(--turq); color: #05302E; }
+.btn.sm { padding: 1px 9px; font-size: 12px; }
+.seg { display: inline-flex; border: 1.5px solid var(--line); border-radius: 9px; overflow: hidden; }
+.seg span { padding: 3px 10px; font-size: 12px; border-right: 1px solid var(--line); }
+.seg span:last-child { border-right: 0; }
+.seg .on { background: var(--navy); color: var(--on-navy); }
+.field { border: 1.5px solid var(--line); border-radius: 8px; padding: 4px 8px; font-size: 13px; color: var(--muted); background: var(--bg); }
+.lbl { display: block; font-size: 12px; color: var(--muted); margin: 8px 0 3px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); border-bottom: 2px solid var(--line); padding: 5px 8px; }
+td { padding: 6px 8px; border-bottom: 1px solid var(--line); }
+td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; }
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.g3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.g4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.alert { border-radius: 9px; padding: 7px 10px; font-size: 13px; font-weight: 600; margin-bottom: 10px; }
+.alert.warn { background: var(--warn-bg); } .alert.bad { background: var(--bad-bg); } .alert.ok { background: var(--ok-bg); }
+.lock { font-size: 12px; font-weight: 700; color: var(--muted); }
+.big { font-size: 26px; font-weight: 800; font-variant-numeric: tabular-nums; }
+
+/* agenda */
+.agenda { display: grid; grid-template-columns: 52px 1fr; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; font-size: 12px; }
+.agenda .h { padding: 0 6px; height: 34px; border-bottom: 1px solid var(--line); color: var(--muted); text-align: right; line-height: 34px; background: var(--panel); }
+.agenda .s { height: 34px; border-bottom: 1px solid var(--line); padding: 0 10px; display: flex; align-items: center; gap: 8px; }
+.s.livre { background: var(--ok-bg); } .s.aula { background: color-mix(in srgb, var(--aula) 22%, var(--panel)); }
+.s.aluguel { background: color-mix(in srgb, var(--aluguel) 22%, var(--panel)); } .s.dayuse { background: color-mix(in srgb, var(--dayuse) 28%, var(--panel)); }
+.s.bloq { background: color-mix(in srgb, var(--bloq) 25%, var(--panel)); }
+
+/* mata-mata */
+.bracket { display: flex; gap: 22px; align-items: center; }
+.bracket .col { display: flex; flex-direction: column; gap: 12px; }
+.match { border: 1.5px solid var(--line); border-radius: 8px; font-size: 12px; min-width: 130px; }
+.match div { padding: 3px 8px; display: flex; justify-content: space-between; gap: 8px; }
+.match div + div { border-top: 1px solid var(--line); }
+.match .w { font-weight: 800; }
+
+/* boneco */
+.avatar { height: 180px; border-radius: 10px; background: repeating-linear-gradient(135deg, var(--hatch1) 0 10px, var(--hatch2) 10px 20px); display: grid; place-items: center; text-align: center; font-size: 13px; color: var(--muted); }
+.opts { display: flex; gap: 6px; }
+.opts span { border: 1.5px solid var(--line); border-radius: 8px; padding: 2px 8px; font-size: 12px; }
+.opts .on { border-color: var(--turq); background: color-mix(in srgb, var(--turq) 22%, var(--panel)); font-weight: 700; }
+.optrow { display: grid; grid-template-columns: 110px 1fr; align-items: center; gap: 8px; padding: 5px 0; font-size: 13px; }
+.sw { width: 18px; height: 18px; border-radius: 50%; display: inline-block; border: 2px solid var(--line); vertical-align: middle; }
+
+@media (max-width: 960px) {
+  .layout { grid-template-columns: minmax(0, 1fr); }
+  nav { position: static; flex-direction: row; overflow-x: auto; padding-bottom: 6px; gap: 6px; }
+  nav .grp { display: none; }
+  nav button { white-space: nowrap; flex: none; border-color: var(--line); }
+  nav button small { display: none; }
+  .cols { grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: no-preference) { .screen { animation: in .18s ease-out; } }
+@keyframes in { from { opacity: .4; } to { opacity: 1; } }
+</style>
+
+<div class="wrap">
+  <span class="tag">Fase 0 · Planejamento · rascunhos de tela</span>
+  <h1>Wireframes Arena Beach Tennis</h1>
+  <p class="lead">Rascunhos simples de cada tela, só para validar o que aparece onde. Cores e formas finais vêm na Fase 2 e 3. Todos os nomes, números e valores são exemplos. A tela de preços fica vazia de propósito: você preenche no sistema.</p>
+
+  <div class="layout">
+    <nav id="nav" aria-label="Telas">
+      <span class="tag grp">Na TV</span>
+      <button type="button" data-s="ambiente" aria-selected="true">Ambiente<small>cena + lista lateral</small></button>
+      <button type="button" data-s="campeonato" aria-selected="false">Campeonato<small>cena + tela dividida</small></button>
+      <span class="tag grp">Clique na arena</span>
+      <button type="button" data-s="agenda" aria-selected="false">Agenda da quadra<small>marcar horário</small></button>
+      <button type="button" data-s="dayuse" aria-selected="false">Day use<small>fila manual</small></button>
+      <button type="button" data-s="escritorio" aria-selected="false">Escritório<small>alunos e pagamento</small></button>
+      <button type="button" data-s="venda" aria-selected="false">Lojinha e lanchonete<small>cardápio e vendas</small></button>
+      <button type="button" data-s="vestiario" aria-selected="false">Vestiário<small>limpeza e manutenção</small></button>
+      <button type="button" data-s="estoque" aria-selected="false">Estoque<small>raquetes e bolinhas</small></button>
+      <span class="tag grp">Dono</span>
+      <button type="button" data-s="precos" aria-selected="false">Preços do aluguel<small>faixa, dia, feriado</small></button>
+      <button type="button" data-s="boneco" aria-selected="false">Editor de boneco<small>peças e presets</small></button>
+      <button type="button" data-s="avisos" aria-selected="false">Avisos e patrocinadores<small>carrossel da TV</small></button>
+      <button type="button" data-s="entrada" aria-selected="false">Entrada e backup<small>PIN, exportar, importar</small></button>
+    </nav>
+
+    <main>
+      <!-- AMBIENTE -->
+      <section class="screen" id="ambiente">
+        <div class="head"><h2>Modo Ambiente</h2><div class="uses"><span>D09 só apelido</span><span>D15 TV por HDMI</span><span>D41 propagandas</span></div></div>
+        <div class="cols">
+          <div class="scroller"><div class="frame">
+            <div class="top"><span class="brand">ARENA BEACH TENNIS</span><span class="modes"><span class="on">Ambiente</span><span>Campeonato</span></span><span class="clock">18:42<small>Aberto · fecha às 22:00</small></span></div>
+            <div class="row">
+              <div class="grow scene">
+                <div><b>Cena 3D das 4 quadras</b><small>câmera automática, placas flutuantes sobre cada quadra</small></div>
+                <div class="court c1">Q1</div><div class="court c2">Q2</div><div class="court c3">Q3</div><div class="court c4">Q4</div>
+                <div class="stand">Arquibancada</div>
+                <div class="fachada"><i>Recepção</i><i>Lojinha</i><i>Lanchonete</i><i>Vestiário</i><i>Estoque</i></div>
+              </div>
+              <div class="side">
+                <div class="tag" style="color:#F4C531">Agora nas quadras</div>
+                <div class="card s-aluguel"><b>Quadra 1</b> <span class="chip aluguel">🎾 ALUGUEL</span><br>18:00–19:00 · Bia/Léo × Caio/Duda<div class="sc">3 × 2 (30–15)</div></div>
+                <div class="card s-aula"><b>Quadra 2</b> <span class="chip aula">🎓 AULA</span><br>Prof. Marcos · 6 alunos</div>
+                <div class="card s-dayuse"><b>Quadra 3</b> <span class="chip dayuse">🔁 DAY USE</span><br>Gabi/Hugo × Íris/João<div class="sc">5 × 4 (até 7)</div><div class="queue"><span>1º Kelly</span><span>2º Lucas</span><span>3º Mari</span></div></div>
+                <div class="card s-livre"><b>Quadra 4</b> <span class="chip livre">✔ LIVRE</span><br>Próximo: 19:00 · Aluguel</div>
+              </div>
+            </div>
+            <div class="ticker"><span class="tag">Aviso</span> Hoje é aniversário da Carla. Parabéns! <span class="dots">● ○ ○</span></div>
+          </div></div>
+          <aside class="notes">
+            <h3>O que aparece</h3>
+            <ul><li>Só apelido ou primeiro nome (D09). Sem contato, contrato ou pagamento.</li><li>Fila do day use e aviso "Próximos: …" quando a fila anda.</li><li>Faixa inferior troca a cada 8 s: avisos, aniversariantes, patrocinadores.</li><li>Sem clique: a TV não tem mouse.</li></ul>
+            <h3>Já existe na Fase 1</h3>
+            <ul><li>Cena, placas, lista lateral e relógio com horário de abertura.</li></ul>
+            <h3>Falta</h3><ul><li>Faixa de avisos (Fase 2).</li></ul>
+          </aside>
+        </div>
+      </section>
+
+      <!-- CAMPEONATO -->
+      <section class="screen" id="campeonato" hidden>
+        <div class="head"><h2>Modo Campeonato</h2><div class="uses"><span>D08 duplas</span><span>D37 padrão ITF</span></div></div>
+        <div class="cols">
+          <div class="scroller"><div class="frame">
+            <div class="top"><span class="brand">COPA DA ARENA <small style="font-weight:400">· exemplo</small></span><span class="modes"><span>Ambiente</span><span class="on">Campeonato</span></span><span class="clock">15:10<small>Fase de grupos</small></span></div>
+            <div class="row">
+              <div class="scene" style="width:42%;min-height:360px"><div><b>Cena 3D</b><small>só quadras com jogo do torneio, placar sobre a quadra</small></div></div>
+              <div class="grow" style="display:flex;flex-direction:column;gap:8px">
+                <div class="box"><h4>Jogando agora</h4>
+                  <div class="g2" style="font-size:13px"><div><span class="chip camp">🏆 Q1</span> Ana/Bia × Caio/Duda<div class="big" style="font-size:18px">6–4 · 3–2</div></div><div><span class="chip camp">🏆 Q2</span> Eva/Fabi × Gabi/Hugo<div class="big" style="font-size:18px">2–6 · 1–0</div></div></div></div>
+                <div class="g2">
+                  <div class="box"><h4>Grupo A</h4>
+                    <table><tr><th>Dupla</th><th class="n">V</th><th class="n">Sets</th></tr><tr><td>Ana/Bia</td><td class="n">2</td><td class="n">4–1</td></tr><tr><td>Eva/Fabi</td><td class="n">1</td><td class="n">2–2</td></tr><tr><td>Iris/João</td><td class="n">0</td><td class="n">0–4</td></tr></table></div>
+                  <div class="box"><h4>Mata-mata</h4>
+                    <div class="bracket"><div class="col"><div class="match"><div class="w"><span>1º A</span><span>—</span></div><div><span>2º B</span><span>—</span></div></div><div class="match"><div><span>1º B</span><span>—</span></div><div><span>2º A</span><span>—</span></div></div></div><div class="col"><div class="match"><div><span>Final</span><span>—</span></div><div><span>&nbsp;</span><span></span></div></div></div></div></div>
+                </div>
+                <div class="box"><h4>Histórico de jogos</h4><table><tr><td>Ana/Bia × Iris/João</td><td class="n">6–2 · 6–1</td></tr><tr><td>Eva/Fabi × Iris/João</td><td class="n">6–3 · 6–4</td></tr></table></div>
+              </div>
+            </div>
+          </div></div>
+          <aside class="notes">
+            <h3>O que aparece</h3>
+            <ul><li>Esquerda: cena 3D. Direita: jogos agora, tabela de cada grupo, mata-mata cruzado, histórico.</li><li>Pontuação sem vantagem no 40–40, set até 6 games, tie-break em 6–6 (configurável).</li></ul>
+            <h3>Configurável por torneio</h3>
+            <ul><li>Nº de sets, set com tie-break, super tie-break de 10 pontos no 3º set, 3º lugar.</li><li>Desempate: vitórias, % de sets, % de games, confronto direto (ordem editável).</li></ul>
+            <div class="q">Conferir a ordem dos desempates no regulamento oficial da ITF antes do primeiro torneio.</div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- AGENDA -->
+      <section class="screen" id="agenda" hidden>
+        <div class="head"><h2>Agenda da quadra</h2><div class="uses"><span>D01 duração por tipo</span><span>D03/D33 horários</span><span>D05/D34 turma 1 a 6</span></div></div>
+        <div class="cols">
+          <div class="scroller"><div class="frame light">
+            <div class="pad row" style="justify-content:space-between;align-items:center;flex-wrap:wrap"><div><div class="title" style="margin:0">Quadra 2 <span class="chip aula">🎓 Aula agora</span></div><span class="lock">Equipe e dono marcam. Cliente não acessa.</span></div><div class="seg"><span>‹</span><span class="on">Qua 28/10</span><span>›</span></div></div>
+            <div class="row" style="padding:0 10px 10px;align-items:flex-start">
+              <div class="grow agenda">
+                <div class="h">06:00</div><div class="s aula">Aula · Turma Iniciantes · Prof. Marcos · 5 alunos</div>
+                <div class="h">07:00</div><div class="s livre">✔ Livre</div>
+                <div class="h">08:00</div><div class="s aluguel">🎾 Aluguel · Bia (R$ — tabela)</div>
+                <div class="h">09:00</div><div class="s bloq">🛠 Manutenção da rede</div>
+                <div class="h">…</div><div class="s livre" style="opacity:.6">dias úteis até 22:00 · fim de semana 07:00–21:00</div>
+                <div class="h">18:00</div><div class="s aula">🎓 Aula · Turma Iniciantes · 6 alunos</div>
+                <div class="h">19:00</div><div class="s livre">✔ Livre · clique para marcar</div>
+                <div class="h">20:00</div><div class="s dayuse">🔁 Day use (sexta a domingo)</div>
+              </div>
+              <div style="width:230px" class="box"><h4>Novo horário · 19:00</h4>
+                <span class="lbl">Tipo</span><div class="seg" style="flex-wrap:wrap"><span class="on">Aluguel</span><span>Aula</span><span>Day use</span><span>Bloqueio</span></div>
+                <span class="lbl">Pessoa</span><div class="field">Buscar aluno ou cadastrar…</div>
+                <span class="lbl">Duração</span><div class="seg"><span class="on">1 h</span><span>2 h</span></div>
+                <span class="lbl">Preço (da tabela)</span><div class="field">Noite · dia útil · 1 h → R$ ___</div>
+                <p style="margin:10px 0 0"><span class="btn pri">Salvar</span> <span class="btn">Cancelar</span></p></div>
+            </div>
+          </div></div>
+          <aside class="notes">
+            <h3>Fluxo em 2 cliques</h3>
+            <ul><li>Clicar na quadra na cena abre esta tela.</li><li>Clicar num horário livre abre "Novo horário".</li><li>O preço vem da tabela e pode ser trocado à mão.</li></ul>
+            <h3>Regras</h3>
+            <ul><li>Aula: 1 a 6 alunos + professor. Turmas se repetem toda semana (D04).</li><li>Aluguel: 1 h ou 2 h.</li><li>Fora do horário de funcionamento a agenda fica cinza.</li></ul>
+            <div class="q">Se dois horários baterem, o sistema avisa antes de salvar.</div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- DAY USE -->
+      <section class="screen" id="dayuse" hidden>
+        <div class="head"><h2>Day use (manual)</h2><div class="uses"><span>D07 manual</span><span>D28 fluxo</span><span>D36 R$ 20,00</span></div></div>
+        <div class="cols">
+          <div class="scroller"><div class="frame light">
+            <div class="pad row" style="justify-content:space-between;align-items:center;flex-wrap:wrap"><div class="title" style="margin:0">Sexta · 18:42 · 11 pessoas</div><div><span class="btn pri">+ Chegou alguém</span> <span class="lock">R$ 20,00 por pessoa, registrado como venda</span></div></div>
+            <div class="g3" style="padding:0 10px 10px">
+              <div class="box"><h4>Quadra 1 · aluguel</h4><span class="lock">Não é day use agora</span></div>
+              <div class="box"><h4>Quadra 3</h4>
+                <b>Na quadra</b><table><tr><td>Gabi</td><td><span class="btn sm">Saiu</span> <span class="btn sm">Continua</span></td></tr><tr><td>Hugo</td><td><span class="btn sm">Saiu</span> <span class="btn sm">Continua</span></td></tr><tr><td>Íris</td><td><span class="btn sm">Saiu</span> <span class="btn sm">Continua</span></td></tr><tr><td>João</td><td><span class="btn sm">Saiu</span> <span class="btn sm">Continua</span></td></tr></table>
+                <b>Fila</b><table><tr><td>1º Kelly</td><td><span class="btn sm pri">Entrar na quadra</span></td></tr><tr><td>2º Lucas</td><td></td></tr><tr><td>3º Mari</td><td></td></tr></table></div>
+              <div class="box"><h4>Quadra 4</h4><span class="chip livre">✔ Livre</span><p style="font-size:13px;margin:8px 0 0">Sem fila. Quem chegar pode escolher esta quadra.</p></div>
+            </div>
+          </div></div>
+          <aside class="notes">
+            <h3>Como funciona</h3>
+            <ul><li>Cada quadra tem a sua fila.</li><li>Quando o jogo acaba, a recepção toca em "Saiu" ou "Continua" por pessoa.</li><li>Quem está na fila entra por "Entrar na quadra". Nada anda sozinho.</li><li>A TV mostra os bonecos esperando e "Próximos: …".</li></ul>
+            <div class="q">A demonstração da Fase 1 faz o rodízio sozinha só para você ver a animação.</div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ESCRITÓRIO -->
+      <section class="screen" id="escritorio" hidden>
+        <div class="head"><h2>Escritório / Recepção</h2><div class="uses"><span>D10 pagamento</span><span>D12 só registra</span><span class="lock">Somente Organização</span></div></div>
+        <div class="cols">
+          <div class="scroller"><div class="frame light">
+            <div class="pad row" style="justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px"><div class="title" style="margin:0">Alunos <span class="lock">🔒 só Organização</span></div><div class="row" style="align-items:center"><span class="field" style="min-width:170px">Buscar nome…</span><div class="seg"><span class="on">Todos</span><span>Em dia</span><span>Pendente</span><span>Atrasado</span></div><span class="btn pri">+ Novo aluno</span></div></div>
+            <div style="padding:0 10px 10px"><table>
+              <tr><th>Nome</th><th>Apelido na TV</th><th>Contato</th><th>Contrato</th><th>Pagamento</th></tr>
+              <tr><td>Ana Souza</td><td>Ana</td><td>(00) 00000-0000</td><td><u>abrir no Drive</u></td><td><span class="chip ok">✔ Em dia</span></td></tr>
+              <tr><td>Bruno Lima</td><td>Bruno</td><td>(00) 00000-0000</td><td><u>abrir no Drive</u></td><td><span class="chip pend">● Pendente</span></td></tr>
+              <tr><td>Carla Nunes</td><td>Carla</td><td>(00) 00000-0000</td><td><u>abrir no Drive</u></td><td><span class="chip atras">▲ Atrasado</span></td></tr>
+            </table></div>
+          </div></div>
+          <aside class="notes">
+            <h3>Cada aluno</h3>
+            <ul><li>Nome, apelido (é o que a TV mostra), contato, link do contrato, situação de pagamento, observações.</li><li>Situação marcada à mão. Nada de pagamento dentro do sistema.</li><li>Cadastrar aluno já sorteia um boneco (veja "Editor de boneco").</li></ul>
+            <div class="q">O arquivo .json exportado tem esses dados pessoais. Guarde em local seguro.</div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- VENDA -->
+      <section class="screen" id="venda" hidden>
+        <div class="head"><h2>Lojinha e lanchonete</h2><div class="uses"><span>D13 venda manual</span><span>D27 comanda depois</span></div></div>
+        <div class="cols">
+          <div class="scroller"><div class="frame light">
+            <div class="pad row" style="justify-content:space-between;align-items:center"><div class="title" style="margin:0">Lanchonete</div><div class="seg"><span>Lojinha</span><span class="on">Lanchonete</span></div></div>
+            <div class="row" style="padding:0 10px 10px;align-items:flex-start">
+              <div class="grow">
+                <div class="seg" style="margin-bottom:8px"><span class="on">Lanches</span><span>Bebidas</span><span>Churrasquinho</span></div>
+                <div class="g3">
+                  <div class="box"><b>Pão de queijo</b><br><span class="big" style="font-size:18px">R$ 6,00</span><br><span class="chip ok">✔ Disponível</span></div>
+                  <div class="box"><b>Misto quente</b><br><span class="big" style="font-size:18px">R$ 12,00</span><br><span class="chip ok">✔ Disponível</span></div>
+                  <div class="box"><b>Pastel</b><br><span class="big" style="font-size:18px">R$ 10,00</span><br><span class="chip atras">✖ Acabou</span></div>
+                </div>
+                <p class="lock" style="margin:8px 0 0">Editar nome, preço e disponibilidade: só Organização.</p>
+              </div>
+              <div style="width:240px" class="box"><h4>Venda atual</h4>
+                <table><tr><td>Misto quente × 2</td><td class="n">R$ 24,00</td></tr><tr><td>Pão de queijo × 1</td><td class="n">R$ 6,00</td></tr><tr><th>Total</th><th class="n">R$ 30,00</th></tr></table>
+                <span class="lbl">Forma de pagamento</span><div class="seg" style="flex-wrap:wrap"><span>Crédito</span><span>Débito</span><span class="on">Pix</span><span>Dinheiro</span></div>
+                <p style="margin:10px 0 0"><span class="btn pri">Registrar venda</span></p></div>
+            </div>
+          </div></div>
+          <aside class="notes">
+            <h3>Regras</h3>
+            <ul><li>Venda registrada à mão: item, quantidade, forma de pagamento, valor, data e hora.</li><li>Sem maquininha ou banco.</li><li>Cardápio visível a todos. Edição e vendas: equipe/dono.</li></ul>
+            <h3>Proposta minha (não aprovada)</h3>
+            <ul><li>Fechamento do dia: total por forma de pagamento.</li></ul>
+          </aside>
+        </div>
+      </section>
+
+      <!-- VESTIÁRIO -->
+      <section class="screen" id="vestiario" hidden>
+        <div class="head"><h2>Vestiário</h2><div class="uses"><span class="lock">Somente Organização</span><span>Anexos só como link do Drive</span></div></div>
+        <div class="cols">
+          <div class="scroller"><div class="frame light">
+            <div class="pad"><div class="alert warn">Limpeza atrasada: última há 2 dias (lembrete só na Organização)</div>
+              <div class="g2">
+                <div class="box"><h4>Última limpeza</h4><div class="big" style="font-size:20px">26/10 · 08:15</div>Por: Rita<br><u>foto no Drive</u><p style="margin:10px 0 0"><span class="btn pri">Registrar limpeza agora</span></p></div>
+                <div class="box"><h4>Última manutenção</h4><div class="big" style="font-size:20px">12/10</div>Troca de 2 cadeados<br><u>nota no Drive</u><p style="margin:10px 0 0"><span class="btn">Registrar manutenção</span></p></div>
+              </div>
+              <div class="box"><h4>Histórico</h4><table><tr><td>26/10</td><td>Limpeza</td><td>Rita</td></tr><tr><td>24/10</td><td>Limpeza</td><td>Sérgio</td></tr><tr><td>12/10</td><td>Manutenção</td><td>Troca de cadeados</td></tr></table></div></div>
+          </div></div>
+          <aside class="notes">
+            <h3>Regras</h3>
+            <ul><li>Nunca aparece na TV nem para quem não é dono.</li><li>Prazo de limpeza atrasada: você define.</li></ul>
+            <div class="q">Quantas horas ou dias sem limpeza devem disparar o lembrete?</div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ESTOQUE -->
+      <section class="screen" id="estoque" hidden>
+        <div class="head"><h2>Estoque</h2><div class="uses"><span class="lock">Somente Organização</span><span>Alerta de estoque baixo</span></div></div>
+        <div class="cols">
+          <div class="scroller"><div class="frame light">
+            <div class="pad">
+              <div class="alert bad">Bolinhas abaixo do mínimo: 36 de 40</div>
+              <div class="g2">
+                <div class="box"><h4>Raquetes</h4><span class="big">14</span> <span class="lock">mínimo 10</span><p style="margin:8px 0 0"><span class="btn sm">− 1</span> <span class="btn sm">+ 1</span> <span class="chip ok">✔ OK</span></p></div>
+                <div class="box"><h4>Bolinhas</h4><span class="big">36</span> <span class="lock">mínimo 40</span><p style="margin:8px 0 0"><span class="btn sm">− 1</span> <span class="btn sm">+ 1</span> <span class="chip atras">▲ Baixo</span></p></div>
+              </div>
+              <div class="box"><h4>Outros equipamentos</h4><table><tr><th>Item</th><th class="n">Qtd</th><th class="n">Mínimo</th></tr><tr><td>Redes</td><td class="n">5</td><td class="n">4</td></tr><tr><td>Cestos de bolinhas</td><td class="n">4</td><td class="n">4</td></tr><tr><td>Coletes</td><td class="n">12</td><td class="n">8</td></tr></table></div>
+            </div>
+          </div></div>
+          <aside class="notes"><h3>Regras</h3><ul><li>Bolinhas e raquetes em destaque (você pediu).</li><li>Alerta só na Organização.</li><li>Item novo: nome, quantidade, mínimo.</li></ul></aside>
+        </div>
+      </section>
+
+      <!-- PREÇOS -->
+      <section class="screen" id="precos" hidden>
+        <div class="head"><h2>Preços do aluguel</h2><div class="uses"><span>D35 quatro fatores</span><span class="lock">Somente Organização</span></div></div>
+        <div class="cols">
+          <div class="scroller"><div class="frame light">
+            <div class="pad">
+              <div class="box"><h4>Tabela (valores em branco, você preenche)</h4>
+                <table><tr><th>Faixa</th><th>Duração</th><th class="n">Dia útil</th><th class="n">Fim de semana</th><th class="n">Feriado</th></tr>
+                  <tr><td rowspan="2">Manhã 06–12</td><td>1 h</td><td class="n">R$ ___</td><td class="n">R$ ___</td><td class="n">R$ ___</td></tr><tr><td>2 h</td><td class="n">R$ ___</td><td class="n">R$ ___</td><td class="n">R$ ___</td></tr>
+                  <tr><td rowspan="2">Tarde 12–18</td><td>1 h</td><td class="n">R$ ___</td><td class="n">R$ ___</td><td class="n">R$ ___</td></tr><tr><td>2 h</td><td class="n">R$ ___</td><td class="n">R$ ___</td><td class="n">R$ ___</td></tr>
+                  <tr><td rowspan="2">Noite 18–22</td><td>1 h</td><td class="n">R$ ___</td><td class="n">R$ ___</td><td class="n">R$ ___</td></tr><tr><td>2 h</td><td class="n">R$ ___</td><td class="n">R$ ___</td><td class="n">R$ ___</td></tr></table></div>
+              <div class="g2"><div class="box"><h4>Feriados cadastrados</h4><table><tr><td>07/09</td><td>Independência</td></tr><tr><td>12/10</td><td>N. Sra. Aparecida</td></tr></table><p style="margin:8px 0 0"><span class="btn sm">+ Adicionar feriado</span></p></div>
+                <div class="box"><h4>Day use</h4><span class="big">R$ 20,00</span><br><span class="lock">por pessoa, vale o horário todo</span></div></div>
+            </div>
+          </div></div>
+          <aside class="notes"><h3>Como funciona</h3><ul><li>Ao marcar um aluguel, o sistema procura a linha certa (faixa, tipo de dia, duração) e sugere o valor.</li><li>Feriado vence fim de semana e dia útil.</li></ul>
+            <div class="q">As faixas Manhã/Tarde/Noite (06–12, 12–18, 18–22) são sugestão minha. Qual divisão você usa?</div></aside>
+        </div>
+      </section>
+
+      <!-- BONECO -->
+      <section class="screen" id="boneco" hidden>
+        <div class="head"><h2>Editor de boneco</h2><div class="uses"><span>D22 equipe e aluno</span><span>D39 peças e 12 presets</span></div></div>
+        <div class="cols">
+          <div class="scroller"><div class="frame light">
+            <div class="pad row" style="align-items:flex-start;gap:16px">
+              <div style="width:200px"><div class="avatar">boneco 3D<br>gira ao arrastar</div><p style="margin:10px 0 0"><span class="btn">Sortear</span> <span class="btn pri">Salvar</span></p></div>
+              <div class="grow">
+                <div class="optrow"><b>Tom de pele</b><div class="opts"><span>Claro</span><span class="on">Médio claro</span><span>Médio escuro</span><span>Escuro</span></div></div>
+                <div class="optrow"><b>Cabelo</b><div class="opts"><span>Curto</span><span class="on">Comprido</span><span>Rabo de cavalo</span><span>Raspado</span></div></div>
+                <div class="optrow"><b>Cor do cabelo</b><div class="opts"><span>Preto</span><span class="on">Castanho</span><span>Loiro</span><span>Ruivo</span></div></div>
+                <div class="optrow"><b>Camisa</b><div class="opts"><span class="on">Turquesa</span><span>Coral</span><span>Amarela</span><span>Branca</span></div></div>
+                <div class="optrow"><b>Shorts</b><div class="opts"><span>Azul-marinho</span><span>Preto</span><span class="on">Cinza</span><span>Verde</span></div></div>
+                <div class="optrow"><b>Acessório</b><div class="opts"><span>Nenhum</span><span class="on">Boné</span><span>Viseira</span><span>Óculos</span></div></div>
+                <p class="lock" style="margin:10px 0 0">Ou escolha um dos 12 presets prontos.</p>
+              </div>
+            </div>
+          </div></div>
+          <aside class="notes"><h3>Regras</h3><ul><li>4 opções por peça: 4.096 combinações.</li><li>Novo cadastro já recebe um preset sorteado.</li><li>Professor tem camisa roxa exclusiva e destaque dourado, fora desta lista.</li></ul>
+            <div class="q">Como o aluno personaliza sem a Organização (D22), se não há Modo Cliente? Proposta: o aluno pede à recepção, que abre o editor com ele.</div></aside>
+        </div>
+      </section>
+
+      <!-- AVISOS -->
+      <section class="screen" id="avisos" hidden>
+        <div class="head"><h2>Avisos e patrocinadores</h2><div class="uses"><span>D41 link direto de imagem</span><span>8 s por anúncio</span></div></div>
+        <div class="cols">
+          <div class="scroller"><div class="frame light">
+            <div class="pad">
+              <div class="title">Faixa da TV</div>
+              <table><tr><th>Tipo</th><th>Conteúdo</th><th>Período</th><th>Ativo</th></tr>
+                <tr><td>Aviso</td><td>Quadra 3 fechada sábado para manutenção</td><td>até 31/10</td><td>✔</td></tr>
+                <tr><td>Aniversário</td><td>Carla (automático pelo cadastro)</td><td>no dia</td><td>✔</td></tr>
+                <tr><td>Patrocinador</td><td>Loja Exemplo · imagem por link direto (.png/.jpg)</td><td>01/10 a 30/11</td><td>✔</td></tr></table>
+              <p style="margin:10px 0 0"><span class="btn pri">+ Novo item</span></p>
+              <div class="alert warn" style="margin-top:10px">Link do Drive não vira imagem na TV. Use o link direto da imagem.</div>
+            </div>
+          </div></div>
+          <aside class="notes"><h3>Cadastro de patrocinador</h3><ul><li>Nome, link da imagem, início, fim, ativo.</li><li>A faixa troca de item a cada 8 s.</li></ul>
+            <div class="q">Aniversário: você quer data de nascimento no cadastro do aluno? Isso é dado pessoal a mais.</div></aside>
+        </div>
+      </section>
+
+      <!-- ENTRADA -->
+      <section class="screen" id="entrada" hidden>
+        <div class="head"><h2>Entrada e backup</h2><div class="uses"><span>D11 um login</span><span>D17 exportar e importar</span><span>D31 aviso de 7 dias</span></div></div>
+        <div class="cols">
+          <div class="scroller"><div class="frame light">
+            <div class="pad g2">
+              <div class="box"><h4>Entrar na Organização</h4><span class="lbl">PIN</span><div class="field">● ● ● ●</div><p style="margin:10px 0 0"><span class="btn pri">Entrar</span></p><p class="lock">O PIN trava a tela. Não é segurança forte.</p></div>
+              <div class="box"><h4>Backup dos dados</h4><div class="alert ok">Último backup: há 3 dias (aviso aparece com 7)</div><span class="btn pri">Exportar .json</span> <span class="btn">Importar .json</span><p class="lock" style="margin:8px 0 0">Guarde o arquivo no Drive. Contém dados pessoais.</p></div>
+            </div>
+          </div></div>
+          <aside class="notes"><h3>Atenção</h3><ul><li>Se alguém limpar os dados do navegador, o que não foi exportado se perde.</li><li>Importar substitui os dados atuais. O sistema pede confirmação antes.</li></ul></aside>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<script>
+(function () {
+  var btns = Array.prototype.slice.call(document.querySelectorAll('#nav button'));
+  var ids = btns.map(function (b) { return b.getAttribute('data-s'); });
+  function show(id) {
+    if (ids.indexOf(id) < 0) id = ids[0];
+    btns.forEach(function (b) { b.setAttribute('aria-selected', String(b.getAttribute('data-s') === id)); });
+    document.querySelectorAll('.screen').forEach(function (s) { s.hidden = s.id !== id; });
+  }
+  btns.forEach(function (b) { b.addEventListener('click', function () {
+    var id = b.getAttribute('data-s'); show(id);
+    try { history.replaceState(null, '', '#' + id); } catch (e) { location.hash = id; }
+  }); });
+  window.addEventListener('hashchange', function () { show(location.hash.slice(1)); });
+  show(location.hash.slice(1));
+})();
+</script>
