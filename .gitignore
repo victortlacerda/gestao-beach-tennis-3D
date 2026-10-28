@@ -1,0 +1,8 @@
+node_modules/
+dist/artifact.html
+dist/pages/
+*.log
+.DS_Store
+# backups do sistema contêm dados pessoais: nunca versionar
+arena-beach-tennis-backup-*.json
+*.backup.json
