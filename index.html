@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arena Beach Tennis</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="app">
+  <div id="stage">
+    <canvas id="c" aria-label="Arena de beach tennis em 3D"></canvas>
+
+    <header id="topbar">
+      <div class="brand">
+        <svg viewBox="0 0 40 40" width="38" height="38" aria-hidden="true"><circle cx="20" cy="20" r="20" fill="#1FB5B0"/><g transform="rotate(-38 20 20)"><ellipse cx="20" cy="15" rx="8" ry="10" fill="#FFF9EE"/><ellipse cx="20" cy="15" rx="5.2" ry="7.2" fill="#FF6B57"/><rect x="18.4" y="24" width="3.2" height="9" rx="1.4" fill="#FFF9EE"/></g><circle cx="29.5" cy="29.5" r="3.6" fill="#F4C531"/></svg>
+        <div><b>ARENA BEACH TENNIS</b><small>marca provisória</small></div>
+      </div>
+      <nav class="modes" aria-label="Modos">
+        <button class="on" type="button" data-mode="ambiente">Ambiente</button>
+        <button type="button" data-mode="campeonato">Campeonato</button>
+        <button type="button" data-mode="organizacao">Organização <i>🔒</i></button>
+      </nav>
+      <div class="clock">
+        <b id="clockTime">16:30</b>
+        <span id="openState"><em class="dot"></em>Aberto</span>
+        <small id="clockSim" hidden>horário simulado</small>
+      </div>
+    </header>
+
+    <div id="tooltip" role="tooltip"></div>
+    <div id="toast" role="status" aria-live="polite"></div>
+
+    <aside id="areaCard" hidden aria-live="polite"></aside>
+
+    <div id="ticker" hidden aria-live="polite"><span class="tk-tag" id="tkTag"></span><span class="tk-text" id="tkText"></span><span class="tk-dots" id="tkDots" aria-hidden="true"></span></div>
+
+    <section id="demo" class="panel closed">
+      <button id="demoToggle" type="button" aria-expanded="false"><span>Dados e demonstração ▴</span><small id="dataBadge">sem dados</small></button>
+      <div id="demoBody">
+        <div class="row"><label>Dados <b id="dataCount"></b></label>
+          <p class="note" id="dataInfo"></p>
+          <div class="mini"><button type="button" id="btnSample">Carregar exemplo</button><button type="button" id="btnClear">Apagar tudo</button></div>
+          <div class="mini"><button type="button" id="btnExport">Exportar .json</button><button type="button" id="btnImport">Importar .json</button></div>
+          <input type="file" id="fileImport" accept="application/json,.json" hidden>
+          <p class="note msg" id="dataMsg" role="status"></p></div>
+        <div class="row"><label>Relógio da arena <b id="clockMode">hora real</b></label>
+          <div class="mini"><select id="selDay" aria-label="Dia"></select></div>
+          <div class="mini"><input type="time" id="inpTime" value="18:30" aria-label="Hora"><button type="button" id="btnSimSet">Simular este horário</button></div>
+          <div class="mini"><button type="button" id="btnPreset1">Sexta 18:30</button><button type="button" id="btnPreset2">Sábado 15:30</button><button type="button" id="btnReal">Hora real</button></div></div>
+        <div class="row"><label>Fonte da cena</label>
+          <div class="seg wrap" id="segScenario"></div></div>
+        <div class="row"><label>Câmera</label>
+          <div class="seg" id="segCam"><button type="button" data-v="auto" class="on">Automática</button><button type="button" data-v="livre">Livre</button></div></div>
+        <div class="row"><label for="hourRange">Hora do céu <b id="hourVal">16:30</b></label>
+          <input id="hourRange" type="range" min="0" max="24" step="0.05" value="16.5">
+          <div class="mini"><button type="button" id="btnNow">Agora</button><button type="button" id="btnNoon">Tarde</button><button type="button" id="btnDusk">Entardecer</button><button type="button" id="btnNight">Noite</button></div>
+          <label class="chk"><input type="checkbox" id="chkLapse"> Passar o tempo (dia → noite)</label></div>
+        <div class="row"><label>Nomes na cena</label>
+          <div class="seg" id="segNames"><button type="button" data-v="courts" class="on">Quadras</button><button type="button" data-v="all">Todos</button><button type="button" data-v="off">Ocultos</button></div></div>
+        <div class="row"><button type="button" id="btnRotate" class="wide">Terminar partida do day use (Quadra 3)</button>
+          <button type="button" id="btnSide" class="wide ghost">Mostrar/ocultar painel lateral</button></div>
+        <p class="stats" id="stats"></p>
+      </div>
+    </section>
+
+    <div id="hint"><kbd>Arrastar</kbd> girar · <kbd>Botão direito</kbd> mover · <kbd>Roda</kbd> zoom · <kbd>Clique</kbd> numa área · <kbd>0</kbd> visão geral · <kbd>1–4</kbd> quadras · <kbd>F</kbd> tela cheia</div>
+  </div>
+
+  <aside id="side" aria-label="Quem está jogando"></aside>
+  <aside id="campPanel" aria-label="Campeonato" hidden></aside>
+  <aside id="orgPanel" aria-label="Organização" hidden></aside>
+</div>
+
+<script src="vendor/three.min.js"></script>
+<script src="src/config.js"></script>
+<script src="src/utils.js"></script>
+<script src="src/data.js"></script>
+<script src="src/torneio.js"></script>
+<script src="src/sample.js"></script>
+<script src="src/agenda.js"></script>
+<script src="src/regras.js"></script>
+<script src="src/characters.js"></script>
+<script src="src/environment.js"></script>
+<script src="src/arena.js"></script>
+<script src="src/camera.js"></script>
+<script src="src/sim.js"></script>
+<script src="src/interaction.js"></script>
+<script src="src/campeonato_ui.js"></script>
+<script src="src/org_core.js"></script>
+<script src="src/org_agenda.js"></script>
+<script src="src/org_cad.js"></script>
+<script src="src/org_camp.js"></script>
+<script src="src/ui.js"></script>
+<script src="src/main.js"></script>
+</body>
+</html>
