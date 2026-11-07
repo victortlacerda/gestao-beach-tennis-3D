@@ -6,7 +6,8 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "node build.js",
-    "test": "node tests/torneio.test.js && node tests/agenda.test.js && node tests/regras.test.js && node tests/dados.test.js"
+    "test": "node tests/torneio.test.js && node tests/agenda.test.js && node tests/regras.test.js && node tests/dados.test.js",
+    "prints": "node tools/prints.js"
   },
   "devDependencies": {
     "playwright": "^1.40.0"
